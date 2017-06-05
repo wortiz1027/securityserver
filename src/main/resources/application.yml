@@ -1,0 +1,35 @@
+# +-----------------------------------------------------
+# |         SERVER CONFIG
+# +-----------------------------------------------------
+server:
+  port: 8887
+  context-path: /securityserver
+
+# +-----------------------------------------------------
+# |         JPA AND DATABASE CONFIG
+# +-----------------------------------------------------
+spring:
+  application:
+    name: securityserver
+  profiles:
+    active: development
+  jpa:
+    database: MYSQL
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+      url: jdbc:mysql://localhost:6603/security?useSSL=false
+      driver-class-name: com.mysql.jdbc.Driver
+      username: security
+      password: security
+      platform: mysql
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.data: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file: /tmp/securityserver.log
