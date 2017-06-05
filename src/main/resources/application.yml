@@ -31,6 +31,9 @@ spring:
       username: security
       password: security
       platform: mysql
+      hikari:
+        connection-timeout: 60000
+        maximum-pool-size: 5
 
 # +-----------------------------------------------------
 # |         LOGGIN CONFIG
