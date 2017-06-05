@@ -2,8 +2,15 @@
 # |         SERVER CONFIG
 # +-----------------------------------------------------
 server:
-  port: 8887
+  port: 8443
   context-path: /securityserver
+  ssl:
+    enabled: true
+    key-alias: tomcat
+    key-store: "keystore.p12"
+    key-store-type: PKCS12
+    key-store-password: tomcatSecurity
+    key-password: tomcatSecurity
 
 # +-----------------------------------------------------
 # |         JPA AND DATABASE CONFIG
@@ -24,6 +31,10 @@ spring:
       username: security
       password: security
       platform: mysql
+
+# +-----------------------------------------------------
+# |         LOGGIN CONFIG
+# +-----------------------------------------------------
 logging:
   level:
     org.springframework.web: DEBUG
