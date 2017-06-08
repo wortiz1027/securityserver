@@ -21,12 +21,22 @@ spring:
   profiles:
     active: development
   jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     database: MYSQL
+    openInView: false
+    generate-ddl: false
     hibernate:
       ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        cache:
+          use_second_level_cache: false
+          use_query_cache: false
+        generate_statistics: true
+        naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
   datasource:
-      url: jdbc:mysql://localhost:6603/security?useSSL=false
+      url: jdbc:mysql://localhost:6603/security?verifyServerCertificate=false&useSSL=false&requireSSL=false
       driver-class-name: com.mysql.jdbc.Driver
       username: security
       password: security
@@ -34,6 +44,20 @@ spring:
       hikari:
         connection-timeout: 60000
         maximum-pool-size: 5
+  mail:
+    host: smtp.gmail.com
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+            fallback: false
 
 # +-----------------------------------------------------
 # |         LOGGIN CONFIG
