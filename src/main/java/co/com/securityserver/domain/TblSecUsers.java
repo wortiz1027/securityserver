@@ -1,71 +1,141 @@
 package co.com.securityserver.domain;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Date;
+import java.util.List;
 
-/**
- * Created by Wilman Ortiz Navarro on 4/06/2017.
- */
 @Entity
-@Table(name = "tbl_sec_users", schema = "security", catalog = "")
-public class TblSecUsers {
-    private Integer idUser;
-    private Long cedula;
-    private String nombres;
-    private String apellidos;
-    private String direccion;
-    private Timestamp fechaNacimiento;
-    private Long telefono;
-    private String email;
-    private String login;
-    private String password;
-    private String enable;
-    private String accountNonExpired;
-    private String credentialNonExpired;
-    private String accountNonLocket;
+@Table(name = "tbl_sec_users", schema = "security")
+public class TblSecUsers implements java.io.Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "id_user")
-    public Integer getIdUser() {
-        return idUser;
+    @NotNull
+    @Column(name = "ID_USER")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private BigDecimal idUser;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "CEDULA")
+    private BigInteger cedula;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "NOMBRES")
+    private String nombre;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "APELLIDOS")
+    private String apellido;
+
+    @Size(max = 100)
+    @Column(name = "DIRECCION")
+    private String direccion;
+
+    @Column(name = "FECHA_NACIMIENTO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaNacimiento;
+
+    @Size(max = 30)
+    @Column(name = "TELEFONO")
+    private String telefono;
+
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "EMAIL")
+    private String email;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 30)
+    @Column(name = "LOGIN")
+    private String login;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "PASSWORD")
+    private String password;
+
+    @Size(max = 10)
+    @Column(name = "ENABLE")
+    private String enable;
+
+    @Size(max = 10)
+    @Column(name = "ACCOUNT_NON_EXPIRED")
+    private String accountNonExpired;
+
+    @Size(max = 10)
+    @Column(name = "CREDENTIAL_NON_EXPIRED")
+    private String credentialNonExpired;
+
+    @Size(max = 10)
+    @Column(name = "ACCOUNT_NON_LOCKET")
+    private String accountNonLocket;
+
+    @ManyToMany(mappedBy = "userList", fetch = FetchType.LAZY)
+    private List<TblSecRoles> roleList;
+
+    public TblSecUsers() {
     }
 
-    public void setIdUser(Integer idUser) {
+    public TblSecUsers(BigDecimal idUser) {
         this.idUser = idUser;
     }
 
-    @Basic
-    @Column(name = "cedula")
-    public Long getCedula() {
+    public TblSecUsers(BigDecimal idUser, BigInteger cedula, String nombre, String apellido, String email, String login, String password) {
+        this.idUser = idUser;
+        this.cedula = cedula;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.login = login;
+        this.password = password;
+    }
+
+    public BigDecimal getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(BigDecimal idUser) {
+        this.idUser = idUser;
+    }
+
+    public BigInteger getCedula() {
         return cedula;
     }
 
-    public void setCedula(Long cedula) {
+    public void setCedula(BigInteger cedula) {
         this.cedula = cedula;
     }
 
-    @Basic
-    @Column(name = "nombres")
-    public String getNombres() {
-        return nombres;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    @Basic
-    @Column(name = "apellidos")
-    public String getApellidos() {
-        return apellidos;
+    public String getApellido() {
+        return apellido;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 
-    @Basic
-    @Column(name = "direccion")
     public String getDireccion() {
         return direccion;
     }
@@ -74,28 +144,22 @@ public class TblSecUsers {
         this.direccion = direccion;
     }
 
-    @Basic
-    @Column(name = "fecha_nacimiento")
-    public Timestamp getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Timestamp fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    @Basic
-    @Column(name = "telefono")
-    public Long getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(Long telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
-    @Basic
-    @Column(name = "email")
     public String getEmail() {
         return email;
     }
@@ -104,8 +168,6 @@ public class TblSecUsers {
         this.email = email;
     }
 
-    @Basic
-    @Column(name = "login")
     public String getLogin() {
         return login;
     }
@@ -114,8 +176,6 @@ public class TblSecUsers {
         this.login = login;
     }
 
-    @Basic
-    @Column(name = "password")
     public String getPassword() {
         return password;
     }
@@ -124,8 +184,6 @@ public class TblSecUsers {
         this.password = password;
     }
 
-    @Basic
-    @Column(name = "enable")
     public String getEnable() {
         return enable;
     }
@@ -134,8 +192,6 @@ public class TblSecUsers {
         this.enable = enable;
     }
 
-    @Basic
-    @Column(name = "account_non_expired")
     public String getAccountNonExpired() {
         return accountNonExpired;
     }
@@ -144,8 +200,6 @@ public class TblSecUsers {
         this.accountNonExpired = accountNonExpired;
     }
 
-    @Basic
-    @Column(name = "credential_non_expired")
     public String getCredentialNonExpired() {
         return credentialNonExpired;
     }
@@ -154,61 +208,44 @@ public class TblSecUsers {
         this.credentialNonExpired = credentialNonExpired;
     }
 
-    @Basic
-    @Column(name = "account_non_locket")
     public String getAccountNonLocket() {
         return accountNonLocket;
     }
 
-    public void setAccountNonLocket(String accountNonLocket) {
-        this.accountNonLocket = accountNonLocket;
+    public void setAccountNonLocket(String accountNonLocked) {
+        this.accountNonLocket = accountNonLocked;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public List<TblSecRoles> getRoleList() {
+        return roleList;
+    }
 
-        TblSecUsers that = (TblSecUsers) o;
-
-        if (idUser != null ? !idUser.equals(that.idUser) : that.idUser != null) return false;
-        if (cedula != null ? !cedula.equals(that.cedula) : that.cedula != null) return false;
-        if (nombres != null ? !nombres.equals(that.nombres) : that.nombres != null) return false;
-        if (apellidos != null ? !apellidos.equals(that.apellidos) : that.apellidos != null) return false;
-        if (direccion != null ? !direccion.equals(that.direccion) : that.direccion != null) return false;
-        if (fechaNacimiento != null ? !fechaNacimiento.equals(that.fechaNacimiento) : that.fechaNacimiento != null)
-            return false;
-        if (telefono != null ? !telefono.equals(that.telefono) : that.telefono != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        if (login != null ? !login.equals(that.login) : that.login != null) return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
-        if (enable != null ? !enable.equals(that.enable) : that.enable != null) return false;
-        if (accountNonExpired != null ? !accountNonExpired.equals(that.accountNonExpired) : that.accountNonExpired != null)
-            return false;
-        if (credentialNonExpired != null ? !credentialNonExpired.equals(that.credentialNonExpired) : that.credentialNonExpired != null)
-            return false;
-        if (accountNonLocket != null ? !accountNonLocket.equals(that.accountNonLocket) : that.accountNonLocket != null)
-            return false;
-
-        return true;
+    public void setRoleList(List<TblSecRoles> roleList) {
+        this.roleList = roleList;
     }
 
     @Override
     public int hashCode() {
-        int result = idUser != null ? idUser.hashCode() : 0;
-        result = 31 * result + (cedula != null ? cedula.hashCode() : 0);
-        result = 31 * result + (nombres != null ? nombres.hashCode() : 0);
-        result = 31 * result + (apellidos != null ? apellidos.hashCode() : 0);
-        result = 31 * result + (direccion != null ? direccion.hashCode() : 0);
-        result = 31 * result + (fechaNacimiento != null ? fechaNacimiento.hashCode() : 0);
-        result = 31 * result + (telefono != null ? telefono.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (login != null ? login.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (enable != null ? enable.hashCode() : 0);
-        result = 31 * result + (accountNonExpired != null ? accountNonExpired.hashCode() : 0);
-        result = 31 * result + (credentialNonExpired != null ? credentialNonExpired.hashCode() : 0);
-        result = 31 * result + (accountNonLocket != null ? accountNonLocket.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (idUser != null ? idUser.hashCode() : 0);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof TblSecUsers)) {
+            return false;
+        }
+        TblSecUsers other = (TblSecUsers) object;
+        if ((this.idUser == null && other.idUser != null) || (this.idUser != null && !this.idUser.equals(other.idUser))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "modelo.User[ idUser=" + idUser + " ]";
+    }
+
 }

@@ -2,11 +2,8 @@ package co.com.securityserver.domain;
 
 import javax.persistence.*;
 
-/**
- * Created by Wilman Ortiz Navarro on 4/06/2017.
- */
 @Entity
-@Table(name = "oauth_client_details", schema = "security", catalog = "")
+@Table(name = "oauth_client_details", schema = "security")
 public class OauthClientDetails {
     private Integer clientId;
     private String resourceId;
@@ -18,7 +15,7 @@ public class OauthClientDetails {
     private Long accessTokenValidity;
     private Long refreshTokenValidity;
     private String additionalInformation;
-    private Byte autoapprove;
+    private String  autoapprove;
 
     @Id
     @Column(name = "client_id")
@@ -122,11 +119,11 @@ public class OauthClientDetails {
 
     @Basic
     @Column(name = "autoapprove")
-    public Byte getAutoapprove() {
+    public String getAutoapprove() {
         return autoapprove;
     }
 
-    public void setAutoapprove(Byte autoapprove) {
+    public void setAutoapprove(String autoapprove) {
         this.autoapprove = autoapprove;
     }
 
