@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface OAuthClientDAO extends JpaRepository<OauthClientDetails, Integer> {
 
     @Query("SELECT count(c) FROM OauthClientDetails c WHERE c.clientId = :ipClientId")
-    boolean isClientAvailable(@Param("ipClientId") String clientId);
+    int isClientAvailable(@Param("ipClientId") String clientId);
 
     @Query("SELECT client FROM OauthClientDetails client WHERE client.clientId = :ipClientId")
     OauthClientDetails loadClientById(@Param("ipClientId") String clientId);

@@ -1,34 +1,74 @@
 package co.com.securityserver.domain;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 
 @Entity
-@Table(name = "oauth_client_details", schema = "security")
-public class OauthClientDetails {
-    private Integer clientId;
-    private String resourceId;
-    private String clientSecret;
-    private String scope;
-    private String authorizedGrantTypes;
-    private String webServerRedirectUri;
-    private String authorities;
-    private Long accessTokenValidity;
-    private Long refreshTokenValidity;
-    private String additionalInformation;
-    private String  autoapprove;
+@Table(name = "oauth_client_details", catalog = "security", schema = "security")
+@NamedQueries({
+        @NamedQuery(name = "OauthClientDetails.findAll", query = "SELECT o FROM OauthClientDetails o")
+        , @NamedQuery(name = "OauthClientDetails.findByClientId", query = "SELECT o FROM OauthClientDetails o WHERE o.clientId = :clientId")
+        , @NamedQuery(name = "OauthClientDetails.findByResourceId", query = "SELECT o FROM OauthClientDetails o WHERE o.resourceId = :resourceId")
+        , @NamedQuery(name = "OauthClientDetails.findByClientSecret", query = "SELECT o FROM OauthClientDetails o WHERE o.clientSecret = :clientSecret")
+        , @NamedQuery(name = "OauthClientDetails.findByScope", query = "SELECT o FROM OauthClientDetails o WHERE o.scope = :scope")
+        , @NamedQuery(name = "OauthClientDetails.findByAuthorizedGrantTypes", query = "SELECT o FROM OauthClientDetails o WHERE o.authorizedGrantTypes = :authorizedGrantTypes")
+        , @NamedQuery(name = "OauthClientDetails.findByWebServerRedirectUri", query = "SELECT o FROM OauthClientDetails o WHERE o.webServerRedirectUri = :webServerRedirectUri")
+        , @NamedQuery(name = "OauthClientDetails.findByAuthorities", query = "SELECT o FROM OauthClientDetails o WHERE o.authorities = :authorities")
+        , @NamedQuery(name = "OauthClientDetails.findByAccessTokenValidity", query = "SELECT o FROM OauthClientDetails o WHERE o.accessTokenValidity = :accessTokenValidity")
+        , @NamedQuery(name = "OauthClientDetails.findByRefreshTokenValidity", query = "SELECT o FROM OauthClientDetails o WHERE o.refreshTokenValidity = :refreshTokenValidity")
+        , @NamedQuery(name = "OauthClientDetails.findByAdditionalInformation", query = "SELECT o FROM OauthClientDetails o WHERE o.additionalInformation = :additionalInformation")
+        , @NamedQuery(name = "OauthClientDetails.findByAutoapprove", query = "SELECT o FROM OauthClientDetails o WHERE o.autoapprove = :autoapprove")})
+public class OauthClientDetails implements java.io.Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
+    @Basic(optional = false)
     @Column(name = "client_id")
-    public Integer getClientId() {
-        return clientId;
+    private String clientId;
+    @Basic(optional = false)
+    @Column(name = "resource_id")
+    private String resourceId;
+    @Basic(optional = false)
+    @Column(name = "client_secret")
+    private String clientSecret;
+    @Column(name = "scope")
+    private String scope;
+    @Column(name = "authorized_grant_types")
+    private String authorizedGrantTypes;
+    @Column(name = "web_server_redirect_uri")
+    private String webServerRedirectUri;
+    @Column(name = "authorities")
+    private String authorities;
+    @Column(name = "access_token_validity")
+    private BigInteger accessTokenValidity;
+    @Column(name = "refresh_token_validity")
+    private BigInteger refreshTokenValidity;
+    @Column(name = "additional_information")
+    private String additionalInformation;
+    @Column(name = "autoapprove")
+    private String autoapprove;
+
+    public OauthClientDetails() {
     }
 
-    public void setClientId(Integer clientId) {
+    public OauthClientDetails(String clientId) {
         this.clientId = clientId;
     }
 
-    @Basic
-    @Column(name = "resource_id")
+    public OauthClientDetails(String clientId, String resourceId, String clientSecret) {
+        this.clientId = clientId;
+        this.resourceId = resourceId;
+        this.clientSecret = clientSecret;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
     public String getResourceId() {
         return resourceId;
     }
@@ -37,8 +77,6 @@ public class OauthClientDetails {
         this.resourceId = resourceId;
     }
 
-    @Basic
-    @Column(name = "client_secret")
     public String getClientSecret() {
         return clientSecret;
     }
@@ -47,8 +85,6 @@ public class OauthClientDetails {
         this.clientSecret = clientSecret;
     }
 
-    @Basic
-    @Column(name = "scope")
     public String getScope() {
         return scope;
     }
@@ -57,8 +93,6 @@ public class OauthClientDetails {
         this.scope = scope;
     }
 
-    @Basic
-    @Column(name = "authorized_grant_types")
     public String getAuthorizedGrantTypes() {
         return authorizedGrantTypes;
     }
@@ -67,8 +101,6 @@ public class OauthClientDetails {
         this.authorizedGrantTypes = authorizedGrantTypes;
     }
 
-    @Basic
-    @Column(name = "web_server_redirect_uri")
     public String getWebServerRedirectUri() {
         return webServerRedirectUri;
     }
@@ -77,8 +109,6 @@ public class OauthClientDetails {
         this.webServerRedirectUri = webServerRedirectUri;
     }
 
-    @Basic
-    @Column(name = "authorities")
     public String getAuthorities() {
         return authorities;
     }
@@ -87,28 +117,22 @@ public class OauthClientDetails {
         this.authorities = authorities;
     }
 
-    @Basic
-    @Column(name = "access_token_validity")
-    public Long getAccessTokenValidity() {
+    public BigInteger getAccessTokenValidity() {
         return accessTokenValidity;
     }
 
-    public void setAccessTokenValidity(Long accessTokenValidity) {
+    public void setAccessTokenValidity(BigInteger accessTokenValidity) {
         this.accessTokenValidity = accessTokenValidity;
     }
 
-    @Basic
-    @Column(name = "refresh_token_validity")
-    public Long getRefreshTokenValidity() {
+    public BigInteger getRefreshTokenValidity() {
         return refreshTokenValidity;
     }
 
-    public void setRefreshTokenValidity(Long refreshTokenValidity) {
+    public void setRefreshTokenValidity(BigInteger refreshTokenValidity) {
         this.refreshTokenValidity = refreshTokenValidity;
     }
 
-    @Basic
-    @Column(name = "additional_information")
     public String getAdditionalInformation() {
         return additionalInformation;
     }
@@ -117,8 +141,6 @@ public class OauthClientDetails {
         this.additionalInformation = additionalInformation;
     }
 
-    @Basic
-    @Column(name = "autoapprove")
     public String getAutoapprove() {
         return autoapprove;
     }
@@ -128,45 +150,28 @@ public class OauthClientDetails {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public int hashCode() {
+        int hash = 0;
+        hash += (clientId != null ? clientId.hashCode() : 0);
+        return hash;
+    }
 
-        OauthClientDetails that = (OauthClientDetails) o;
-
-        if (clientId != null ? !clientId.equals(that.clientId) : that.clientId != null) return false;
-        if (resourceId != null ? !resourceId.equals(that.resourceId) : that.resourceId != null) return false;
-        if (clientSecret != null ? !clientSecret.equals(that.clientSecret) : that.clientSecret != null) return false;
-        if (scope != null ? !scope.equals(that.scope) : that.scope != null) return false;
-        if (authorizedGrantTypes != null ? !authorizedGrantTypes.equals(that.authorizedGrantTypes) : that.authorizedGrantTypes != null)
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof OauthClientDetails)) {
             return false;
-        if (webServerRedirectUri != null ? !webServerRedirectUri.equals(that.webServerRedirectUri) : that.webServerRedirectUri != null)
+        }
+        OauthClientDetails other = (OauthClientDetails) object;
+        if ((this.clientId == null && other.clientId != null) || (this.clientId != null && !this.clientId.equals(other.clientId))) {
             return false;
-        if (authorities != null ? !authorities.equals(that.authorities) : that.authorities != null) return false;
-        if (accessTokenValidity != null ? !accessTokenValidity.equals(that.accessTokenValidity) : that.accessTokenValidity != null)
-            return false;
-        if (refreshTokenValidity != null ? !refreshTokenValidity.equals(that.refreshTokenValidity) : that.refreshTokenValidity != null)
-            return false;
-        if (additionalInformation != null ? !additionalInformation.equals(that.additionalInformation) : that.additionalInformation != null)
-            return false;
-        if (autoapprove != null ? !autoapprove.equals(that.autoapprove) : that.autoapprove != null) return false;
-
+        }
         return true;
     }
 
     @Override
-    public int hashCode() {
-        int result = clientId != null ? clientId.hashCode() : 0;
-        result = 31 * result + (resourceId != null ? resourceId.hashCode() : 0);
-        result = 31 * result + (clientSecret != null ? clientSecret.hashCode() : 0);
-        result = 31 * result + (scope != null ? scope.hashCode() : 0);
-        result = 31 * result + (authorizedGrantTypes != null ? authorizedGrantTypes.hashCode() : 0);
-        result = 31 * result + (webServerRedirectUri != null ? webServerRedirectUri.hashCode() : 0);
-        result = 31 * result + (authorities != null ? authorities.hashCode() : 0);
-        result = 31 * result + (accessTokenValidity != null ? accessTokenValidity.hashCode() : 0);
-        result = 31 * result + (refreshTokenValidity != null ? refreshTokenValidity.hashCode() : 0);
-        result = 31 * result + (additionalInformation != null ? additionalInformation.hashCode() : 0);
-        result = 31 * result + (autoapprove != null ? autoapprove.hashCode() : 0);
-        return result;
+    public String toString() {
+        return "vectores2.OauthClientDetails[ clientId=" + clientId + " ]";
     }
+
 }

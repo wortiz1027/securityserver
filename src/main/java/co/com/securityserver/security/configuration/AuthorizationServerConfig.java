@@ -90,17 +90,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         // Con los datos del cliente en base de datos
-        //clients.withClientDetails(clientDetailService);
-
-        clients
-                .inMemory()
-                .withClient("clientapp")
-                .authorizedGrantTypes("password","refresh_token")
-                .authorities("USER")
-                .scopes("read", "write")
-                .resourceIds(Constants.RESOURCE_ID)
-                .secret("123456");
-
+        clients.withClientDetails(clientDetailService);
     }
 
     @Bean

@@ -69,7 +69,7 @@ public class CustomClientDetailService implements ClientDetailsService, ClientSe
     @Override
     public void delete(OauthClientDetails client) {
         if (client != null){
-            getoAuthClientDAO().delete(client.getClientId());
+            getoAuthClientDAO().delete(new Integer(client.getClientId()));
         }
     }
 
@@ -77,7 +77,7 @@ public class CustomClientDetailService implements ClientDetailsService, ClientSe
     @InfoLogger(origen = "loadClientByClientId")
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
 
-        if (!getoAuthClientDAO().isClientAvailable(clientId)) {
+        if (getoAuthClientDAO().isClientAvailable(clientId) < 0) {
             throw new ClientRegistrationException(String.format(Constants.MSG_ERROR_CLIENTE_NO_REGISTRADO, clientId));
         }
 
